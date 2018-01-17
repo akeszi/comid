@@ -560,7 +560,7 @@ class ContentEditableInput extends InputStyle {
     div.contentEditable = "true";
     disableBrowserMagic(div);
 
-    on(div, "paste", (Event e) {
+    on(div, "paste", (ClipboardEvent e) {
       var pasted = e.clipboardData == null
           ? null : e.clipboardData.getData("text/plain");
       if (pasted != null) {
@@ -613,7 +613,7 @@ class ContentEditableInput extends InputStyle {
       }
     });
 
-    onCopyCut(TouchEvent e) {
+    onCopyCut(ClipboardEvent e) {
       if (cm.somethingSelected()) {
         lastCopied = cm.getSelections();
         if (e.type == "cut") cm.replaceSelection("", null, "cut");

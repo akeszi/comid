@@ -1040,10 +1040,6 @@ class CodeEditor extends Object with EventManager implements CodeMirror {
   extendMode(mode, properties) {
     var msg = "Mode extensions are not supported; define a subclass of Mode.";
     throw new StateError(msg);
-    if (!modeExtensions.containsKey(mode)) modeExtensions[mode] = {};
-    Map exts = modeExtensions[mode];
-//    copyObj(properties, exts);
-    exts.addAll(properties);
   }
 
   // EXTENSIONS
@@ -1878,10 +1874,10 @@ class CodeEditor extends Object with EventManager implements CodeMirror {
 
   // Helper function from event.dart
   int e_button(MouseEvent e) {
-    int b = e.which;
-    if (b == null) b = e.button + 1;
-    if (mac && e.ctrlKey && b == 1) b = 3;
-    return b;
+//    int b = e.which;
+    return e.button + 1;
+//    if (mac && e.ctrlKey && b == 1) b = 3;
+//    return b;
   }
 
   // A mouse down can be a single click, double click, triple click,
@@ -2347,7 +2343,7 @@ class CodeEditor extends Object with EventManager implements CodeMirror {
   }
 
   wheelEventDelta(WheelEvent e) {
-    var dx = e.wheelDeltaX, dy = e.wheelDeltaY;
+    var dx = e.deltaX, dy = e.deltaY;
     // Comment out old Firefox code
     //if(dx == null && e.detail != 0 && e.axis == e.HORIZONTAL_AXIS)dx=e.detail;
     //if(dy == null && e.detail != 0 && e.axis == e.VERTICAL_AXIS)dy=e.detail;
@@ -2853,6 +2849,7 @@ class CodeEditor extends Object with EventManager implements CodeMirror {
   // this.
   Map normalizeKeyMap(Map keymap) {
     var copy = {};
+    // ignore: for_in_of_invalid_type
     for (String keyname in keymap) if (keymap.containsKey(keyname)) {
       var value = keymap[keyname];
       if (new RegExp(r'^(name|fallthrough|(de|at)tach)$').hasMatch(keyname)) continue;

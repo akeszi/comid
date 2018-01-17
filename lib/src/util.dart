@@ -452,7 +452,6 @@ int countColumn(String string, int end, int tabSize,
     n += tabSize - (n % tabSize);
     i = nextTab + 1;
   }
-  throw new StateError('countColumn() failed');
 }
 
 // The inverse of countColumn -- find the offset that corresponds to
